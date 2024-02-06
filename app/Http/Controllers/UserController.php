@@ -8,6 +8,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        // true
+        $users = User::all();
     }
 }

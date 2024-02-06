@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $with = ['image'];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -20,14 +20,19 @@
             <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
-    <livewire:uploader-user />
+    @if($image)
+        <div style="text-align: center;">
+            <img src="{{ asset($image) }}" class="" width="100" height="50" alt="">
+        </div>
+    @endif
+    <livewire:uploader-user :$image/>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Send message</button>
         <div wire:loading>
             @if ($method === 'save')
-               Saving ... 
+                Saving ...
             @elseif($method === 'update')
-               Updating ...
+                Updating ...
             @endif
         </div>
     </div>

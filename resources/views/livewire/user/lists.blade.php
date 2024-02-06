@@ -4,7 +4,7 @@
         <div class="col">
             <!-- Large modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                data-whatever="@mdo" wire:click="$dispatch('empty-user-field')">create user</button>
+                data-whatever="@mdo" wire:click="$dispatch('reset-file', { name: 'create' })">create user</button>
             <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -36,8 +36,7 @@
                         <th scope="col">image</th>
                         <th scope="col">edit</th>
                         <th scope="col">delete</th>
-                        <th scope="col"><button wire:click="deleteAll"
-                                wire:confirm="{{ $sureMessage }}"
+                        <th scope="col"><button wire:click="deleteAll" wire:confirm="{{ $sureMessage }}"
                                 class="btn btn-sm btn-danger">delete</button> <input type="checkbox"
                                 wire:model.change="stateSelectAll" /></th>
                     </tr>

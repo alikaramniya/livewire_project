@@ -32,20 +32,30 @@ class Lists extends Component
         }
     }
 
+    #[On('update-state')]
     public function updated($name, $value)
     {
+        // اگر روی انتخاب همه کلیک کرده بود و همچنین $name برابر با stateSelectAll بود بیا همه checkbox هارو انتخاب کن
         if ($name == 'stateSelectAll' && $this->stateSelectAll) {
-            $this->fields = $this->users->pluck('id');
-        } elseif ($name == 'stateSelectAll') {
+            if ($this->users) { // چک میکنه آیا اصلا کاربری وجود داره یا نه
+                $this->fields = $this->users->pluck('id');
+            }
+        } elseif ($name == 'stateSelectAll') { // اگر دوباره زد روی دکمه و حالت true خارج شد همه checkbox هارو غیر فعال کن
             $this->fields = [];
         }
 
+        // اگر کاربر روی checkbox مربوط به هر record کلیک کرد این اجرا میشه
         if (str_starts_with($name, 'field')) {
+            // اگر تعداد رکورد هایی که انتخاب میکنی برابر با تعداد کل رکورد ها باشه تیک دکمه حذف همه فعال میشه
             if (count($this->fields) === $this->users->count()) {
                 $this->stateSelectAll = true;
                 $this->dispatch('record-updated');
             }
 
+            /*******
+                * چک میکنه ایا این چکباکسی که کاربر انتخاب کرده توی لیست چک باکس هایانتخاب هست یا نه اگر بود مانع از اجر ابرنامهمیشه
+                * تا حالت کلی غیر فعال نشه اما اگر این شرط مقدار false بده یعنی این توی لیست فیلد ها نیست پس حالت انتخاب همه  فیلد ها باید تیکش برداشته بشه *
+            *******/
             if (in_array($value, (array) $this->fields)) {
                 return;
             }
@@ -126,6 +136,7 @@ class Lists extends Component
     {
         if ($this->users) {
             /* $this->users->prepend($user); */ // desc
+            /* $this->users = User::with('image')->get(); */
             $this->users->push($user); // asc
         }
     }
